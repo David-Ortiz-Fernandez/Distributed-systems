@@ -1,0 +1,25 @@
+CC = gcc
+CFLAGS = -c -g -Wall
+DFLAGS = -g
+
+
+EXECS = clientGame serverGame
+
+all: $(EXECS)
+
+
+clientGame: utils.o clientGame.o 
+	$(CC) utils.o clientGame.o -o clientGame
+
+clientGame.o: clientGame.c
+	$(CC) $(CFLAGS) clientGame.c
+	
+serverGame: utils.o game.o serverGame.o 
+	$(CC) utils.o game.o serverGame.o -o serverGame
+
+serverGame.o: serverGame.c
+	$(CC) $(DFLAGS) serverGame.c -lpthread
+	
+clean:
+	rm -f  serverGame.o clientGame.o
+	rm -f $(EXECS)
